@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'VT323', monospace;
+  --font-mono: 'VT323', monospace;
+  --font-display: 'Press Start 2P', cursive;
+}
+
+body {
+  @apply bg-black text-white antialiased overflow-hidden;
+  font-family: 'VT323', monospace;
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 255, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 0, 255, 0.15) 1px, transparent 1px);
+}
+
+/* Scanlines overlay */
+body::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 50;
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none;
+}
+
+.raw-border {
+  border: 4px solid #0ff;
+  box-shadow: 6px 6px 0px #f0f;
+  background: black;
+}
+
+.raw-border-magenta {
+  border: 4px solid #f0f;
+  box-shadow: -6px 6px 0px #0ff;
+  background: black;
+}
+
+.game-grid {
+  background: rgba(0, 0, 0, 0.8);
+  border: 4px solid #0ff;
+  box-shadow: 6px 6px 0px #f0f;
+}
+
+.snake-body {
+  background: #0ff;
+  border: 1px solid #000;
+}
+
+.food {
+  background: #f0f;
+  border-radius: 0;
+}
+
+/* Glitch effect for text */
+.glitch {
+  position: relative;
+  font-family: 'Press Start 2P', cursive;
+  color: #fff;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  pointer-events: none;
+}
+.glitch::before {
+  left: 3px;
+  text-shadow: -2px 0 #f0f;
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+.glitch::after {
+  left: -3px;
+  text-shadow: -2px 0 #0ff;
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(20px, 9999px, 85px, 0); }
+  10% { clip: rect(61px, 9999px, 50px, 0); }
+  20% { clip: rect(80px, 9999px, 56px, 0); }
+  30% { clip: rect(54px, 9999px, 12px, 0); }
+  40% { clip: rect(67px, 9999px, 32px, 0); }
+  50% { clip: rect(31px, 9999px, 80px, 0); }
+  60% { clip: rect(2px, 9999px, 44px, 0); }
+  70% { clip: rect(76px, 9999px, 68px, 0); }
+  80% { clip: rect(90px, 9999px, 52px, 0); }
+  90% { clip: rect(18px, 9999px, 74px, 0); }
+  100% { clip: rect(81px, 9999px, 25px, 0); }
+}
+
+.jitter {
+  animation: jitter 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
+}
+
+@keyframes jitter {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
